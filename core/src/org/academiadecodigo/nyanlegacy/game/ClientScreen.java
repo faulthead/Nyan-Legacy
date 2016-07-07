@@ -38,7 +38,7 @@ public class ClientScreen extends ApplicationAdapter implements Screen, InputPro
     private OrthogonalTiledMapRenderer renderer;
 
 
-    //Input processor stuff
+    //Input processor stuff.
     private boolean movingLeft = false;
     private boolean movingRight = false;
     private boolean movingDown = false;
