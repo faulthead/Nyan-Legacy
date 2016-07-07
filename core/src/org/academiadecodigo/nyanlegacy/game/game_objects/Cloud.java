@@ -14,7 +14,8 @@ import org.academiadecodigo.nyanlegacy.game.GameManager;
 /**
  * Created by Cadavre Exquis on 07-07-2016.
  */
-public class NyanCat {
+public class Cloud {
+
 
     private Body body;
     private World world;
@@ -27,14 +28,14 @@ public class NyanCat {
 
     private TiledMapTileSet tileSet;
 
-    public NyanCat(MapObject object, ClientScreen clientScreen) {
+    public Cloud(MapObject object, ClientScreen clientScreen) {
         this.object = object;
         this.clientScreen = clientScreen;
 
-        defineNyanCat();
+        defineCloud();
     }
 
-    private void defineNyanCat() {
+    private void defineCloud() {
 
         world = clientScreen.getWorld();
         map = clientScreen.getMap();
@@ -53,7 +54,7 @@ public class NyanCat {
 
         fixture.setUserData(this);
         Filter filter = new Filter();
-        filter.categoryBits = GameManager.NYAN_BIT;
+        filter.categoryBits = GameManager.CLOUD_BIT;
         fixture.getFilterData();
     }
 
@@ -67,7 +68,7 @@ public class NyanCat {
     }
 
     public TiledMapTileLayer.Cell getCell() {
-        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(3);
+        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(5);
 
         return layer.getCell((int) (body.getPosition().x), (int) (body.getPosition().y));
     }

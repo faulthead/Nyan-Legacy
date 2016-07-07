@@ -12,6 +12,8 @@ public class GameManager extends Game {
     //bits equivalent to layers in tiled
     public static final short GRID_BIT = 1;
     public static final short NYAN_BIT = 2;
+    public static final short PINK_NYAN_BIT = 4;
+    public static final short CLOUD_BIT = 8;
 
     @Override
     public void create() {
