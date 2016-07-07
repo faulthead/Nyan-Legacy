@@ -42,6 +42,10 @@ public class ClientScreen extends ApplicationAdapter implements InputProcessor{
     @Override
     public void render() {
 
+        /**
+         * Purposely empty to add socket implementation in a new branch.
+         */
+
         if (movingLeft) {
 
         }
@@ -67,6 +71,13 @@ public class ClientScreen extends ApplicationAdapter implements InputProcessor{
         batch.dispose();
         img.dispose();
     }
+
+    /** {@link InputProcessor} implementation.
+     *
+     * We tried very, very hard to have this in a separate class but in the way Libgdx works it just isn't feasible
+     * in such a short time. I hope to one day be able to separate this logic from the {@link ClientScreen} class.
+     * Currently set up to work with flags to allow continuous movement while holding down the key.
+     */
 
     @Override
     public boolean keyDown(int keycode) {
