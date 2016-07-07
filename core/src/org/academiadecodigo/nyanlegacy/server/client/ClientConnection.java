@@ -99,7 +99,7 @@ public class ClientConnection implements Runnable {
     /**
      * Send a mensage to the client connected.
      *
-     * @param message to send
+     * @param message to send.
      */
     public void send(String message) {
         int x = 0;
