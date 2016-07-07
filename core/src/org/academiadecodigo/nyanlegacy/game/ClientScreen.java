@@ -1,7 +1,9 @@
 package org.academiadecodigo.nyanlegacy.game;
 
-import com.badlogic.gdx.*;
-import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -18,9 +20,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.academiadecodigo.nyanlegacy.game.tools.B2WorldCreator;
 
-import static com.badlogic.gdx.Input.Keys.*;
-
-public class ClientScreen extends ApplicationAdapter implements Screen, InputProcessor {
+public class ClientScreen implements Screen {
 
     private GameManager game;
     private AssetManager manager;
@@ -37,15 +37,6 @@ public class ClientScreen extends ApplicationAdapter implements Screen, InputPro
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
-
-    //Input processor stuff.
-    private boolean movingLeft = false;
-    private boolean movingRight = false;
-    private boolean movingDown = false;
-    private boolean movingUp = false;
-
-    public ClientScreen() {
-    }
 
     public ClientScreen(GameManager game, AssetManager manager) {
         this.game = game;
@@ -68,7 +59,7 @@ public class ClientScreen extends ApplicationAdapter implements Screen, InputPro
 
         creator = new B2WorldCreator(this);
 
-        Gdx.input.setInputProcessor(this);
+
     }
 
 
@@ -84,11 +75,6 @@ public class ClientScreen extends ApplicationAdapter implements Screen, InputPro
         world.step(1 / 60f, 6, 2);
 
         renderer.setView(gameCam);
-    }
-
-    @Override
-    public void show() {
-
     }
 
     @Override
@@ -117,21 +103,27 @@ public class ClientScreen extends ApplicationAdapter implements Screen, InputPro
 
     }
 
+
+    @Override
+    public void dispose() {
+        map.dispose();
+        renderer.dispose();
+        world.dispose();
+        box2DDebugRenderer.dispose();
+    }
+
+
+
+    @Override
+    public void show() {
+
+    }
+
     @Override
     public void hide() {
 
     }
 
-
-    @Override
-    public void dispose() {
-        /*
-        map.dispose();
-        renderer.dispose();
-        world.dispose();
-        box2DDebugRenderer.dispose();
-        */
-    }
 
     public World getWorld() {
         return world;
@@ -139,73 +131,5 @@ public class ClientScreen extends ApplicationAdapter implements Screen, InputPro
 
     public TiledMap getMap() {
         return map;
-    }
-
-    @Override
-    public boolean keyDown(int keycode) {
-
-        if (keycode == LEFT) {
-            movingLeft = true;
-        }
-        if (keycode == RIGHT) {
-            movingLeft = true;
-        }
-        if (keycode == UP) {
-            movingLeft = true;
-        }
-        if (keycode == DOWN) {
-            movingLeft = true;
-        }
-
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-
-        if (keycode == LEFT) {
-            movingLeft = false;
-        }
-        if (keycode == RIGHT) {
-            movingLeft = false;
-        }
-        if (keycode == UP) {
-            movingLeft = false;
-        }
-        if (keycode == DOWN) {
-            movingLeft = false;
-        }
-
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        return false;
     }
 }
