@@ -1,9 +1,7 @@
 package org.academiadecodigo.nyanlegacy.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -20,7 +18,9 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.academiadecodigo.nyanlegacy.game.tools.B2WorldCreator;
 
-public class ClientScreen extends ApplicationAdapter implements Screen {
+import static com.badlogic.gdx.Input.Keys.*;
+
+public class ClientScreen extends ApplicationAdapter implements Screen, InputProcessor {
 
     private GameManager game;
     private AssetManager manager;
@@ -36,6 +36,13 @@ public class ClientScreen extends ApplicationAdapter implements Screen {
     private TmxMapLoader mapLoader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
+
+
+    //Input processor stuff
+    private boolean movingLeft = false;
+    private boolean movingRight = false;
+    private boolean movingDown = false;
+    private boolean movingUp = false;
 
     public ClientScreen() {
     }
@@ -80,6 +87,11 @@ public class ClientScreen extends ApplicationAdapter implements Screen {
     }
 
     @Override
+    public void show() {
+
+    }
+
+    @Override
     public void render(float delta) {
         update(delta);
 
@@ -87,6 +99,26 @@ public class ClientScreen extends ApplicationAdapter implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         renderer.render();
+
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
 
     }
 
@@ -99,34 +131,62 @@ public class ClientScreen extends ApplicationAdapter implements Screen {
         box2DDebugRenderer.dispose();
     }
 
-    @Override
-    public void create() {
-
-
-    }
-
-    @Override
-    public void render() {
-
-
-    }
-
-    @Override
-    public void show() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-
     public World getWorld() {
         return world;
     }
 
     public TiledMap getMap() {
         return map;
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+
+        if (keycode == LEFT) {
+            movingLeft = true;
+        }
+
+
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+
+        if (keycode == LEFT) {
+            movingLeft = false;
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
     }
 }
