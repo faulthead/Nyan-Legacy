@@ -33,7 +33,7 @@ public final class ServerLogic {
 
     /**
      * This method receives a col and a row and it evaluates if there was already a player on that position. If yes, then there's a collision.
-     * If there was not a collision, the statePositionState() method is called.
+     * If there was not a collision, the statePositionState() method is called
      *
      * @param col
      * @param row
