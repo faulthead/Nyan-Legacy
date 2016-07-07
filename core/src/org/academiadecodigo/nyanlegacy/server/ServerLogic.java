@@ -39,7 +39,7 @@ public final class ServerLogic {
      * @param row
      * @return collision state
      */
-    private boolean collision(int col, int row) {
+    public boolean collision(int col, int row) {
 
         if (matrix[col][row] == true) {
             return true;
@@ -50,16 +50,12 @@ public final class ServerLogic {
 
 
     /**
-     * this method will convert the position (cols and rows) into pixels values.
+     * this method will convert the position number into pixels values.
      *
-     * @param col
-     * @param row
      */
-    private int[] libgdxConverter(int col, int row) {
+    public int libgdxConverter(int number) {
 
-        int[] pos = {(col * CELLSIZE),(row * CELLSIZE)};
-
-        return pos;
+        return number * CELLSIZE;
     }
 
 
