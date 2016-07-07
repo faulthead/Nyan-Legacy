@@ -97,7 +97,7 @@ public class ClientConnection implements Runnable {
     }
 
     /**
-     * Send a mensage to the client connected
+     * Send a mensage to the client connected.
      *
      * @param message to send
      */
