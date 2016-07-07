@@ -89,7 +89,7 @@ public class ClientConnection implements Runnable {
     }
 
     /**
-     * generates a String with the respective attributes of the client
+     * generates a String with the respective attributes of the client.
      * @return a String
      */
     public String toString() {
