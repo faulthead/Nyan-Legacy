@@ -11,6 +11,6 @@ public class DesktopLauncher {
 		config.width = GameManager.WIDTH;
 		config.height = GameManager.HEIGHT;
 		config.title = "Nyan Legacy";
-		new LwjglApplication(new ClientScreen(), config);
+		new LwjglApplication(new GameManager(), config);
 	}
 }

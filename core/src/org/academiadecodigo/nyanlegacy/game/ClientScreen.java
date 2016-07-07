@@ -20,7 +20,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.academiadecodigo.nyanlegacy.game.tools.B2WorldCreator;
 
-public class ClientScreen extends ApplicationAdapter implements Screen {
+public class ClientScreen implements Screen {
 
     private GameManager game;
     private AssetManager manager;
@@ -37,8 +37,6 @@ public class ClientScreen extends ApplicationAdapter implements Screen {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
-    public ClientScreen() {
-    }
 
     public ClientScreen(GameManager game, AssetManager manager) {
         this.game = game;
@@ -90,6 +88,21 @@ public class ClientScreen extends ApplicationAdapter implements Screen {
 
     }
 
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
 
     @Override
     public void dispose() {
@@ -99,17 +112,7 @@ public class ClientScreen extends ApplicationAdapter implements Screen {
         box2DDebugRenderer.dispose();
     }
 
-    @Override
-    public void create() {
 
-
-    }
-
-    @Override
-    public void render() {
-
-
-    }
 
     @Override
     public void show() {
