@@ -11,6 +11,7 @@ public final class ServerLogic {
     private static ServerLogic serverLogic = null;
 
     private ServerLogic() {
+
     }
 
     public synchronized static ServerLogic getInstance() {
@@ -25,24 +26,53 @@ public final class ServerLogic {
     /*
     properties and methods
      */
-    private boolean[][] matrix;
 
-    static {
+    public static final int TILESIZE = 21;
+    private static final int CELLSIZE = 50;
+    private static boolean[][] matrix = new boolean[TILESIZE][TILESIZE];
 
-        //create matrix
+    /**
+     * This method receives a col and a row and it evaluates if there was already a player on that position. If yes, then there's a collision.
+     * If there was not a collision, the statePositionState() method is called.
+     *
+     * @param col
+     * @param row
+     * @return collision state
+     */
+    private boolean collision(int col, int row) {
 
-    }
-
-    private boolean collision() {
-
+        if (matrix[col][row] == true) {
+            return true;
+        }
+        setPositionState(col, row);
         return false;
     }
 
-    private void libgdxConverter() {
+
+    /**
+     * this method will convert the position (cols and rows) into pixels values.
+     *
+     * @param col
+     * @param row
+     */
+    private int[] libgdxConverter(int col, int row) {
+
+        int[] pos = {(col * CELLSIZE),(row * CELLSIZE)};
+
+        return pos;
+    }
+
+
+    /**
+     * this method sets the position state to true which means that, the player it´s leaving is trace on that position.
+     *
+     * @param col
+     * @param row
+     */
+    private void setPositionState(int col, int row) {
+
+        matrix[col][row] = true;
 
     }
 
-    private void setPositionState() {
-
-    }
 }
