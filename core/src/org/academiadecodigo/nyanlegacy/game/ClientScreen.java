@@ -37,6 +37,8 @@ public class ClientScreen extends ApplicationAdapter implements Screen {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
+    public ClientScreen() {
+    }
 
     public ClientScreen(GameManager game, AssetManager manager) {
         this.game = game;
@@ -78,6 +80,26 @@ public class ClientScreen extends ApplicationAdapter implements Screen {
     }
 
     @Override
+    public void render(float delta) {
+        update(delta);
+
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        renderer.render();
+
+    }
+
+
+    @Override
+    public void dispose() {
+        map.dispose();
+        renderer.dispose();
+        world.dispose();
+        box2DDebugRenderer.dispose();
+    }
+
+    @Override
     public void create() {
 
 
@@ -90,22 +112,7 @@ public class ClientScreen extends ApplicationAdapter implements Screen {
     }
 
     @Override
-    public void dispose() {
-
-    }
-
-    @Override
     public void show() {
-
-    }
-
-    @Override
-    public void render(float delta) {
-        update(delta);
-
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 
     }
 
