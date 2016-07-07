@@ -68,7 +68,7 @@ public class ClientScreen extends ApplicationAdapter implements Screen, InputPro
 
         creator = new B2WorldCreator(this);
 
-
+        Gdx.input.setInputProcessor(this);
     }
 
 
@@ -125,10 +125,12 @@ public class ClientScreen extends ApplicationAdapter implements Screen, InputPro
 
     @Override
     public void dispose() {
+        /*
         map.dispose();
         renderer.dispose();
         world.dispose();
         box2DDebugRenderer.dispose();
+        */
     }
 
     public World getWorld() {
@@ -145,7 +147,15 @@ public class ClientScreen extends ApplicationAdapter implements Screen, InputPro
         if (keycode == LEFT) {
             movingLeft = true;
         }
-
+        if (keycode == RIGHT) {
+            movingLeft = true;
+        }
+        if (keycode == UP) {
+            movingLeft = true;
+        }
+        if (keycode == DOWN) {
+            movingLeft = true;
+        }
 
         return false;
     }
@@ -154,6 +164,15 @@ public class ClientScreen extends ApplicationAdapter implements Screen, InputPro
     public boolean keyUp(int keycode) {
 
         if (keycode == LEFT) {
+            movingLeft = false;
+        }
+        if (keycode == RIGHT) {
+            movingLeft = false;
+        }
+        if (keycode == UP) {
+            movingLeft = false;
+        }
+        if (keycode == DOWN) {
             movingLeft = false;
         }
 
