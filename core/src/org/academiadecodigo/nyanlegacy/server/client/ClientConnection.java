@@ -102,13 +102,19 @@ public class ClientConnection implements Runnable {
      * @param message to send
      */
     public void send(String message) {
-        sendData = message.getBytes();
-        DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, address, port);
-        try {
-            socket.send(sendPacket);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        int x = 0;
+
+        //while (x < 50) {
+            sendData = message.getBytes();
+            DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, address, port);
+            try {
+                System.out.println(message);
+                socket.send(sendPacket);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            x++;
+        //}
     }
 
     //GETTERS AND SETTERS
