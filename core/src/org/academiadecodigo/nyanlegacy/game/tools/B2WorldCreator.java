@@ -7,6 +7,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import org.academiadecodigo.nyanlegacy.game.ClientScreen;
 import org.academiadecodigo.nyanlegacy.game.GameManager;
+import org.academiadecodigo.nyanlegacy.game.game_objects.Cloud;
+import org.academiadecodigo.nyanlegacy.game.game_objects.NyanCat;
+import org.academiadecodigo.nyanlegacy.game.game_objects.PinkNyanCat;
 
 /**
  * Created by Cadavre Exquis on 07-07-2016.
@@ -50,6 +53,23 @@ public class B2WorldCreator {
             //connect tiled file layer with corresponding bit
             fixtureDef.filter.categoryBits = GameManager.GRID_BIT;
             body.createFixture(fixtureDef);
+        }
+
+        //create Nyan Cat objects in every cell
+
+        for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
+            new NyanCat(clientScreen, object);
+        }
+
+        //create Pink Nyan Cat objects in every cell
+
+        for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
+            new PinkNyanCat(clientScreen, object);
+        }
+
+        //create Cloud objects in every cell
+        for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
+            new Cloud(clientScreen, object);
         }
     }
 }

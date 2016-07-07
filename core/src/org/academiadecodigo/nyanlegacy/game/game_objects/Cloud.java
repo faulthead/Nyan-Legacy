@@ -28,7 +28,7 @@ public class Cloud {
 
     private TiledMapTileSet tileSet;
 
-    public Cloud(MapObject object, ClientScreen clientScreen) {
+    public Cloud( ClientScreen clientScreen, MapObject object) {
         this.object = object;
         this.clientScreen = clientScreen;
 

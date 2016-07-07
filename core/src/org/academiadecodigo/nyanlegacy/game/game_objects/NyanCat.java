@@ -27,7 +27,7 @@ public class NyanCat {
 
     private TiledMapTileSet tileSet;
 
-    public NyanCat(MapObject object, ClientScreen clientScreen) {
+    public NyanCat(ClientScreen clientScreen, MapObject object) {
         this.object = object;
         this.clientScreen = clientScreen;
 

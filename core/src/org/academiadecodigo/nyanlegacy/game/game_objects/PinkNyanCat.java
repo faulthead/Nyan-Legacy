@@ -27,7 +27,7 @@ public class PinkNyanCat {
 
     private TiledMapTileSet tileSet;
 
-    public PinkNyanCat(MapObject object, ClientScreen clientScreen) {
+    public PinkNyanCat( ClientScreen clientScreen, MapObject object) {
         this.object = object;
         this.clientScreen = clientScreen;
 
