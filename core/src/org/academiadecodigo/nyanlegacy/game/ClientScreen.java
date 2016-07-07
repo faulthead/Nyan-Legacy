@@ -37,6 +37,7 @@ public class ClientScreen implements Screen {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
+//merge the things!!!!
 
     public ClientScreen(GameManager game, AssetManager manager) {
         this.game = game;
