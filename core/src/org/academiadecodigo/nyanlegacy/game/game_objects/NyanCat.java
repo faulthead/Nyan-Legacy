@@ -57,6 +57,10 @@ public class NyanCat {
         fixture.getFilterData();
     }
 
+    public void show(){
+        //show image
+    }
+
     public TiledMapTileLayer.Cell getCell() {
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(3);
 
