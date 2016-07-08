@@ -16,6 +16,8 @@ import org.academiadecodigo.nyanlegacy.game.GameManager;
  */
 public class NyanCat {
 
+    private final int TILE_SIZE = 50;
+
     private Body body;
     private World world;
     private TiledMap map;
@@ -28,6 +30,7 @@ public class NyanCat {
     private TiledMapTileSet tileSet;
 
     public NyanCat(ClientScreen clientScreen, MapObject object) {
+
         this.object = object;
         this.clientScreen = clientScreen;
 
@@ -44,31 +47,31 @@ public class NyanCat {
         FixtureDef fixtureDef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set((bounds.getX() + bounds.getWidth() / 2), (bounds.getY() + bounds.getHeight()));
+        bodyDef.position.set((bounds.getX() + bounds.getWidth() / 2) / GameManager.PPM, (bounds.getY() + bounds.getHeight() / 2)/GameManager.PPM);
 
         body = world.createBody(bodyDef);
-        shape.setAsBox(bounds.getWidth() / 2, bounds.getHeight() / 2);
+        shape.setAsBox(bounds.getWidth() / 2 /GameManager.PPM, bounds.getHeight() / 2 /GameManager.PPM);
         fixtureDef.shape = shape;
         fixture = body.createFixture(fixtureDef);
 
         fixture.setUserData(this);
         Filter filter = new Filter();
         filter.categoryBits = GameManager.NYAN_BIT;
-        fixture.getFilterData();
+        fixture.setFilterData(filter);
     }
 
-    private void show(){
+    private void show() {
         //show image
     }
 
-    public void onSelect(){
+    public void onSelect() {
         show();
         //do stuff when tile is selected
     }
 
     public TiledMapTileLayer.Cell getCell() {
-        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(3);
+        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(5);
 
-        return layer.getCell((int) (body.getPosition().x), (int) (body.getPosition().y));
+        return layer.getCell((int) (body.getPosition().x * GameManager.PPM / TILE_SIZE), (int) (body.getPosition().y * GameManager.PPM / TILE_SIZE));
     }
 }

@@ -16,6 +16,8 @@ public class GameManager extends Game implements InputProcessor{
 
     public static final int WIDTH = 1050;
     public static final int HEIGHT = WIDTH;
+    public static final float PPM = 100;
+
     //bits equivalent to layers in tiled
     public static final short GRID_BIT = 1;
     public static final short NYAN_BIT = 2;

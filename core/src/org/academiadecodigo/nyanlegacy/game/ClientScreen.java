@@ -49,11 +49,11 @@ public class ClientScreen implements Screen {
     private void init() {
 
         gameCam = new OrthographicCamera();
-        gamePort = new FillViewport(GameManager.WIDTH, GameManager.HEIGHT, gameCam);
+        gamePort = new FillViewport(GameManager.WIDTH / GameManager.PPM, GameManager.HEIGHT / GameManager.PPM, gameCam);
 
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("tilemap.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map);
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / GameManager.PPM);
         gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
         world = new World(new Vector2(0, 0), true);
@@ -87,11 +87,13 @@ public class ClientScreen implements Screen {
 
         renderer.render();
 
+        //game.spriteBatch.setProjectionMatrix(gameCam.combined);
+
     }
 
     @Override
     public void resize(int width, int height) {
-
+        gamePort.update(width, height);
     }
 
     @Override
@@ -112,7 +114,6 @@ public class ClientScreen implements Screen {
         world.dispose();
         box2DDebugRenderer.dispose();
     }
-
 
 
     @Override
