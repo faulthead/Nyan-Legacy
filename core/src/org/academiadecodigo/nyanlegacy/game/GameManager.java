@@ -56,16 +56,16 @@ public class GameManager extends Game implements InputProcessor {
     @Override
     public void render() {
         super.render();
-        if (movingLeft == true) {
+        if (movingLeft) {
             clientConnector.send("left");
         }
-        if (movingRight == true) {
+        if (movingRight) {
             clientConnector.send("right");
         }
-        if (movingDown == true) {
+        if (movingDown) {
             clientConnector.send("down");
         }
-        if (movingUp == true) {
+        if (movingUp) {
             clientConnector.send("up");
         }
     }

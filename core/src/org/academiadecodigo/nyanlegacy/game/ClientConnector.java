@@ -6,7 +6,7 @@ import java.net.*;
 /**
  * Created by joaoc on 07/07/2016.
  */
-public class ClientConnector implements Runnable {
+public class ClientConnector {
 
     //Connector class.
 
@@ -40,7 +40,7 @@ public class ClientConnector implements Runnable {
         Thread thread = new Thread() {
             @Override
             public void run() {
-                super.run();
+
                 while (true) {
                     try {
 
@@ -65,7 +65,6 @@ public class ClientConnector implements Runnable {
         thread.start();
     }
 
-    @Override
     public void run() {
 
         receivePacket = new DatagramPacket(receiveData, receiveData.length);
