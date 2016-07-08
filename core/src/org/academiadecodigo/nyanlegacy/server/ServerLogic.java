@@ -5,10 +5,17 @@ package org.academiadecodigo.nyanlegacy.server;
  */
 public final class ServerLogic {
 
+    public static final int TILESIZE = 21;
+    private static final int CELLSIZE = 50;
     /*
     ServerLogic singleton definition.
     */
     private static ServerLogic serverLogic = null;
+
+    /*
+    properties and methods
+     */
+    private static boolean[][] matrix = new boolean[TILESIZE][TILESIZE];
 
     private ServerLogic() {
 
@@ -22,14 +29,6 @@ public final class ServerLogic {
 
         return serverLogic;
     }
-
-    /*
-    properties and methods
-     */
-
-    public static final int TILESIZE = 21;
-    private static final int CELLSIZE = 50;
-    private static boolean[][] matrix = new boolean[TILESIZE][TILESIZE];
 
     /**
      * This method receives a col and a row and it evaluates if there was already a player on that position. If yes, then there's a collision.
@@ -51,7 +50,6 @@ public final class ServerLogic {
 
     /**
      * this method will convert the position number into pixels values.
-     *
      */
     public int libgdxConverter(int number) {
 

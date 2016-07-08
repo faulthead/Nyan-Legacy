@@ -29,7 +29,7 @@ public class PinkNyanCat {
 
     private TiledMapTileSet tileSet;
 
-    public PinkNyanCat( ClientScreen clientScreen, MapObject object) {
+    public PinkNyanCat(ClientScreen clientScreen, MapObject object) {
         this.object = object;
         this.clientScreen = clientScreen;
 
@@ -46,7 +46,7 @@ public class PinkNyanCat {
         FixtureDef fixtureDef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set((bounds.getX() + bounds.getWidth() / 2) / GameManager.PPM, (bounds.getY() + bounds.getHeight()/2)/ GameManager.PPM);
+        bodyDef.position.set((bounds.getX() + bounds.getWidth() / 2) / GameManager.PPM, (bounds.getY() + bounds.getHeight() / 2) / GameManager.PPM);
 
         body = world.createBody(bodyDef);
         shape.setAsBox(bounds.getWidth() / 2 / GameManager.PPM, bounds.getHeight() / 2 / GameManager.PPM);
@@ -59,11 +59,11 @@ public class PinkNyanCat {
         fixture.setFilterData(filter);
     }
 
-    private void show(){
+    private void show() {
         //show image
     }
 
-    public void onSelect(){
+    public void onSelect() {
         show();
         //do stuff when tile is selected
     }
@@ -71,6 +71,6 @@ public class PinkNyanCat {
     public TiledMapTileLayer.Cell getCell() {
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(7);
 
-        return layer.getCell((int) (body.getPosition().x * GameManager.PPM/ TILE_SIZE), (int) (body.getPosition().y * GameManager.PPM/ TILE_SIZE));
+        return layer.getCell((int) (body.getPosition().x * GameManager.PPM / TILE_SIZE), (int) (body.getPosition().y * GameManager.PPM / TILE_SIZE));
     }
 }

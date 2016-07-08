@@ -47,10 +47,10 @@ public class NyanCat {
         FixtureDef fixtureDef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set((bounds.getX() + bounds.getWidth() / 2) / GameManager.PPM, (bounds.getY() + bounds.getHeight() / 2)/GameManager.PPM);
+        bodyDef.position.set((bounds.getX() + bounds.getWidth() / 2) / GameManager.PPM, (bounds.getY() + bounds.getHeight() / 2) / GameManager.PPM);
 
         body = world.createBody(bodyDef);
-        shape.setAsBox(bounds.getWidth() / 2 /GameManager.PPM, bounds.getHeight() / 2 /GameManager.PPM);
+        shape.setAsBox(bounds.getWidth() / 2 / GameManager.PPM, bounds.getHeight() / 2 / GameManager.PPM);
         fixtureDef.shape = shape;
         fixture = body.createFixture(fixtureDef);
 

@@ -46,7 +46,7 @@ public class B2WorldCreator {
             body = world.createBody(bodyDef);
 
             //creating tile hitbox
-            shape.setAsBox(rectangle.getWidth()/2, rectangle.getHeight()/2);
+            shape.setAsBox(rectangle.getWidth() / 2, rectangle.getHeight() / 2);
 
             fixtureDef.shape = shape;
 
@@ -57,19 +57,19 @@ public class B2WorldCreator {
 
         //create Nyan Cat objects in every cell
 
-        for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
+        for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
             new NyanCat(clientScreen, object);
         }
 
         //create Pink Nyan Cat objects in every cell
 
-        for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
+        for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
             new PinkNyanCat(clientScreen, object);
         }
 
         //create Cloud objects in every cell
-        for (MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)){
+        for (MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)) {
             new Cloud(clientScreen, object);
-       }
+        }
     }
 }
