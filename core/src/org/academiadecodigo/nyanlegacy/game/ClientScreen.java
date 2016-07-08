@@ -1,25 +1,20 @@
 package org.academiadecodigo.nyanlegacy.game;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTile;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import org.academiadecodigo.nyanlegacy.game.game_objects.GameObject;
 import org.academiadecodigo.nyanlegacy.game.game_objects.NyanCat;
 import org.academiadecodigo.nyanlegacy.game.game_objects.PinkNyanCat;
@@ -53,6 +48,8 @@ public class ClientScreen implements Screen {
 
     private GameObject player1;
 
+    private String json;
+
 
 
     public ClientScreen(GameManager game, AssetManager manager) {
@@ -83,7 +80,7 @@ public class ClientScreen implements Screen {
         creator.addGameObject(gameObject, x, y);
     }
 
-    public void handleInput(String sentence) throws UnknownHostException {
+    private void handleInput(String sentence) throws UnknownHostException {
         //1 substring to remove /
         //array that splits string
         //then split : ---> resulting array:
@@ -91,27 +88,31 @@ public class ClientScreen implements Screen {
         //get position
         //booblean is dead
 
-        String result = sentence.substring(1);
+        if(json.length() > 10) {
+            String result = sentence.substring(1);
 
-        String[] resultArray = result.split(":");
+            String[] resultArray = result.split(":");
 
-        String ip = resultArray[0];
-        int x = Integer.parseInt(resultArray[1]);
-        int y = Integer.parseInt(resultArray[2]);
-        boolean isDead = Boolean.parseBoolean(resultArray[3]);
+            String ip = resultArray[0];
+            int x = Integer.parseInt(resultArray[1]);
+            int y = Integer.parseInt(resultArray[2]);
+            boolean isDead = Boolean.parseBoolean(resultArray[3]);
 
+            if (InetAddress.getLocalHost().getHostAddress().equals(ip)) {
+                System.out.println("MINE");
+                player1 = new NyanCat(this, new Rectangle().setPosition(x,y));
+                player1.setPosition(x, y);
+                gameObjects[x][y] = player1;
 
-        if (InetAddress.getLocalHost().equals(ip)){
-            System.out.println("MINE");
-            player1 = new NyanCat(this, new MapObject());
-            player1.setPosition(x,y);
-            gameObjects[x][y] = player1;
+            } else {
+                System.out.println("YOURS");
+                gameObjects[x][y] = player1;
+                player1 = new PinkNyanCat(this, new Rectangle().setPosition(x,y));
+                System.out.println("END?????");
+                player1.setPosition(x, y);
+            }
 
-        }else {
-            System.out.println("YOURS");
-            gameObjects[x][y] = player1;
-            player1 = new PinkNyanCat(this, new MapObject());
-            player1.setPosition(x,y);
+            System.out.println("LOOP");
         }
 
     }
@@ -136,6 +137,13 @@ public class ClientScreen implements Screen {
 
         renderer.render(background);
         renderer.render(starsBackground);
+        renderer.render(starsForeground);
+
+        try {
+            handleInput(json);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
 
         game.spriteBatch.setProjectionMatrix(gameCam.combined);
 
@@ -146,14 +154,14 @@ public class ClientScreen implements Screen {
             for (int row = 0; row < gameObjects.length; row++) {
                 for (int col = 1; col < gameObjects.length; col++) {
                     if (gameObjects[row][col] != null) {
-                        System.out.println("DRAW");
                         game.spriteBatch.draw(gameObjects[row][col].getTexture(), row * 50 / GameManager.PPM, col * 50 / GameManager.PPM);
+                        System.out.println("DRAW");
                     }
                 }
             }
+            game.spriteBatch.end();
 
         }
-        renderer.render(starsForeground);
 
         /*TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(5);
         TiledMapTileLayer.Cell cell =  layer.getCell(5, 5);
@@ -227,5 +235,9 @@ public class ClientScreen implements Screen {
 
     public void setGameObjects(GameObject[][] gameObjects) {
         this.gameObjects = gameObjects;
+    }
+
+    public void setJson(String json) {
+        this.json = json;
     }
 }

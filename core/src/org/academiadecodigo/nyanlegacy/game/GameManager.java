@@ -61,6 +61,7 @@ public class GameManager extends Game implements InputProcessor {
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         executorService.submit(clientConnector);
         executorService.submit(clientConnector.getThread());
+        render();
     }
 
     @Override

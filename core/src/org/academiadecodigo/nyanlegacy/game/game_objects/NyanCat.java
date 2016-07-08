@@ -1,6 +1,7 @@
 package org.academiadecodigo.nyanlegacy.game.game_objects;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -37,9 +38,9 @@ public class NyanCat extends GameObject {
 
     private TiledMapTileSet tileSet;
 
-    public NyanCat(ClientScreen clientScreen, MapObject object) {
+    public NyanCat(ClientScreen clientScreen, Rectangle object) {
 
-        this.object = object;
+        bounds = object;
         this.clientScreen = clientScreen;
 
         defineNyanCat();
@@ -47,11 +48,10 @@ public class NyanCat extends GameObject {
 
     private void defineNyanCat() {
 
-        texture = new Texture("nyancat_S_Main.1_50.png");
+        texture = new Texture("nyancat_S_Main_1_50.png");
 
         world = clientScreen.getWorld();
         map = clientScreen.getMap();
-        bounds = ((RectangleMapObject) object).getRectangle();
 
         BodyDef bodyDef = new BodyDef();
         FixtureDef fixtureDef = new FixtureDef();

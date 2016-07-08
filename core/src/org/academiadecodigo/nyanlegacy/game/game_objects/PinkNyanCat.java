@@ -1,6 +1,8 @@
 package org.academiadecodigo.nyanlegacy.game.game_objects;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -10,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import javafx.scene.control.TextField;
 import org.academiadecodigo.nyanlegacy.game.ClientScreen;
 import org.academiadecodigo.nyanlegacy.game.GameManager;
 
@@ -36,8 +39,8 @@ public class PinkNyanCat extends GameObject {
 
     private TiledMapTileSet tileSet;
 
-    public PinkNyanCat(ClientScreen clientScreen, MapObject object) {
-        this.object = object;
+    public PinkNyanCat(ClientScreen clientScreen, Rectangle object) {
+        bounds = object;
         this.clientScreen = clientScreen;
 
         definePinkNyanCat();
@@ -45,11 +48,10 @@ public class PinkNyanCat extends GameObject {
 
     private void definePinkNyanCat() {
 
-        texture = new Texture("nyancat2_S_Main.1_50.png");
+        texture = new Texture("nyancat2_S_Main_1_50.png");
 
         world = clientScreen.getWorld();
         map = clientScreen.getMap();
-        bounds = ((RectangleMapObject) object).getRectangle();
 
         BodyDef bodyDef = new BodyDef();
         FixtureDef fixtureDef = new FixtureDef();
