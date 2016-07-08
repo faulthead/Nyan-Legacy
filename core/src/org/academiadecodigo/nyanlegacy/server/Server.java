@@ -26,7 +26,6 @@ public class Server {
 
     private List<ClientConnection> clients = Collections.synchronizedList(new ArrayList<ClientConnection>());
     private ExecutorService pool = Executors.newFixedThreadPool(2);
-    private HashMap<InetAddress, ClientConnection> hashMap = new HashMap<InetAddress, ClientConnection>();
 
     private boolean gameStarted;
 
@@ -83,13 +82,12 @@ public class Server {
                 DatagramPacket receive = new DatagramPacket(receiveData, receiveData.length);
                 serverSocket.receive(receive);
 
-                if (!hashMap.containsKey(receive.getAddress())) {
+                if (clientExists(receive)) {
 
                     System.out.println("### User: " + receive.getAddress() + " has enter the room ###");
 
                     ClientConnection client = new ClientConnection(this, new DatagramSocket(), receive.getAddress(), receive.getPort());
 
-                    hashMap.put(receive.getAddress(), client);
                     clients.add(client);
                     pool.submit(client);
 
@@ -101,6 +99,15 @@ public class Server {
             e.printStackTrace();
         }
 
+    }
+
+    private boolean clientExists(DatagramPacket receive) {
+        for (ClientConnection client:clients) {
+            if(client.getAddress().equals(receive.getAddress())){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -117,7 +124,7 @@ public class Server {
     /**
      * Start the game by send it to all the players
      */
-    private void startGame() {
+    private synchronized void startGame() {
         sendToAll("start");
         sendToAll(clients.get(0).toString());
         sendToAll(clients.get(1).toString());
@@ -125,9 +132,11 @@ public class Server {
         gameStarted = true;
 
         while (true) {
-            /*for (ClientConnection client:clients) {
-                sendToAll(client.toString());
-            }*/
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -147,7 +156,7 @@ public class Server {
      *
      * @return gameStarted
      */
-    public boolean isGameStarted() {
+    public synchronized boolean isGameStarted() {
         return gameStarted;
     }
 }

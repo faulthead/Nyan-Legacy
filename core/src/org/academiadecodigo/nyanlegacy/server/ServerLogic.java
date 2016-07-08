@@ -40,10 +40,9 @@ public final class ServerLogic {
      */
     public boolean collision(int col, int row) {
 
-        if (matrix[col][row] == true) {
+        if (matrix[col][row]) {
             return true;
         }
-        setPositionState(col, row);
         return false;
     }
 
@@ -58,12 +57,12 @@ public final class ServerLogic {
 
 
     /**
-     * this method sets the position state to true which means that, the player it´s leaving is trace on that position.
+     * this method sets the position state to true which means that, the player it´s leaving his trace on that position.
      *
      * @param col
      * @param row
      */
-    private void setPositionState(int col, int row) {
+    public void setPositionState(int col, int row) {
 
         matrix[col][row] = true;
 
