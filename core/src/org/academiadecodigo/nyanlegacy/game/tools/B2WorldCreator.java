@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import org.academiadecodigo.nyanlegacy.game.ClientScreen;
 import org.academiadecodigo.nyanlegacy.game.GameManager;
 import org.academiadecodigo.nyanlegacy.game.game_objects.Cloud;
+import org.academiadecodigo.nyanlegacy.game.game_objects.GameObject;
 import org.academiadecodigo.nyanlegacy.game.game_objects.NyanCat;
 import org.academiadecodigo.nyanlegacy.game.game_objects.PinkNyanCat;
 
@@ -16,9 +17,18 @@ import org.academiadecodigo.nyanlegacy.game.game_objects.PinkNyanCat;
  */
 public class B2WorldCreator {
 
+    private GameObject[][] gameObjects;
+
     public B2WorldCreator(ClientScreen clientScreen) {
 
         init(clientScreen);
+
+        //set container in client screen
+
+        gameObjects = new GameObject[21][21];
+
+        clientScreen.setGameObjects(gameObjects);
+
     }
 
     private void init(ClientScreen clientScreen) {
@@ -57,7 +67,7 @@ public class B2WorldCreator {
 
         //create Nyan Cat objects in every cell
 
-        for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
+       /* for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
             new NyanCat(clientScreen, object);
         }
 
@@ -70,6 +80,10 @@ public class B2WorldCreator {
         //create Cloud objects in every cell
         for (MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)) {
             new Cloud(clientScreen, object);
-        }
+        }*/
+    }
+
+    public void addGameObject(GameObject gameObject, int x, int y){
+        gameObjects[x][y] = gameObject;
     }
 }

@@ -5,7 +5,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -13,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import org.academiadecodigo.nyanlegacy.game.game_objects.GameObject;
 import org.academiadecodigo.nyanlegacy.game.tools.B2WorldCreator;
 
 public class ClientScreen implements Screen {
@@ -32,7 +37,12 @@ public class ClientScreen implements Screen {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
-//merge the things!!!!
+    private int[] background = new int[]{2};
+    private int[] starsBackground = new int[]{3};
+    private int[] starsForeground = new int[]{10};
+
+    private GameObject[][] gameObjects;
+
 
     public ClientScreen(GameManager game, AssetManager manager) {
         this.game = game;
@@ -58,6 +68,9 @@ public class ClientScreen implements Screen {
 
     }
 
+    private void addGameObject(GameObject gameObject, int x, int y) {
+        creator.addGameObject(gameObject, x, y);
+    }
 
     private void handleInput(float dt) {
 
@@ -80,10 +93,55 @@ public class ClientScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        renderer.render();
+        renderer.setView(gameCam);
 
-        //game.spriteBatch.setProjectionMatrix(gameCam.combined);
+        renderer.render(background);
+        renderer.render(starsBackground);
 
+        game.spriteBatch.setProjectionMatrix(gameCam.combined);
+
+        if (!gameObjectsIsEmpty()) {
+            game.spriteBatch.begin();
+
+
+            //draw bidimensional array
+            for (int row = 0; row < gameObjects.length; row++) {
+                for (int col = 1; col < gameObjects.length; col++) {
+                    if (gameObjects[row][col] != null) {
+                        game.spriteBatch.draw(gameObjects[row][col].getTexture(), row * 50 / GameManager.PPM, col * 50 / GameManager.PPM);
+                    }
+                }
+            }
+
+        }
+        renderer.render(starsForeground);
+
+        /*TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(5);
+        TiledMapTileLayer.Cell cell =  layer.getCell(5, 5);
+        TiledMapTile tile = cell.getTile();
+        Texture texture = tile.getProperties().get();
+        texture.draw(Gdx.files.);*/
+
+        //texture.draw(Gdx.files.getFileHandle("nyancat_S_Main.1_50.png",  ).internal("nyancat_S_Main.1_50.png"),50,50 );
+
+    }
+
+    private boolean gameObjectsIsEmpty() {
+
+        boolean isEmpty = false;
+
+        for (int i = 0; i < gameObjects.length; i++) {
+            for (int j = 0; j < gameObjects.length; j++) {
+                if (gameObjects[i][j] != null) {
+                    isEmpty = false;
+                    break;
+                }
+                isEmpty = true;
+
+            }
+
+        }
+        return isEmpty;
     }
 
     @Override
@@ -128,5 +186,9 @@ public class ClientScreen implements Screen {
 
     public TiledMap getMap() {
         return map;
+    }
+
+    public void setGameObjects(GameObject[][] gameObjects) {
+        this.gameObjects = gameObjects;
     }
 }
