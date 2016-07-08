@@ -10,10 +10,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 /**
  * Created by Cadavre Exquis on 07-07-2016.
  */
-public class GameManager extends Game implements InputProcessor{
+public class GameManager extends Game implements InputProcessor {
 
     //Game norms and constants that are used by various classes
-
     public static final int WIDTH = 1050;
     public static final int HEIGHT = WIDTH;
     //bits equivalent to layers in tiled
@@ -22,12 +21,14 @@ public class GameManager extends Game implements InputProcessor{
     public static final short PINK_NYAN_BIT = 4;
     public static final short CLOUD_BIT = 8;
 
-
     //Input processor stuff.
     private boolean movingLeft = false;
     private boolean movingRight = false;
     private boolean movingUp = false;
     private boolean movingDown = false;
+
+    //Networking stuff.
+    private ClientConnector clientConnector;
 
     public SpriteBatch spriteBatch;
 
@@ -43,6 +44,10 @@ public class GameManager extends Game implements InputProcessor{
 
         Gdx.input.setInputProcessor(this);
 
+        clientConnector = new ClientConnector();
+
+        clientConnector.run();
+
         setScreen(new ClientScreen(this, manager));
     }
 
@@ -51,16 +56,22 @@ public class GameManager extends Game implements InputProcessor{
         super.render();
         if (movingLeft == true) {
             System.out.println("left");
+            clientConnector.send("left");
         }
         if (movingRight == true) {
             System.out.println("right");
+            clientConnector.send("right");
         }
         if (movingDown == true) {
             System.out.println("down");
+            clientConnector.send("down");
         }
         if (movingUp == true) {
             System.out.println("up");
+            clientConnector.send("up");
         }
+        System.out.println("stop");
+        clientConnector.send("stop");
     }
 
     @Override
