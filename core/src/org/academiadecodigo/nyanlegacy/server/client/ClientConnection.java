@@ -67,7 +67,7 @@ public class ClientConnection implements Runnable {
     /**
      * Movement logic
      *
-     * @param move the respective movement to make.
+     * @param move the respective movement to make
      */
     private void move(String move){
         if(move.equals("up") || position.getRow() > 0){
