@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -30,25 +31,25 @@ public class GameManager extends Game implements InputProcessor {
     private boolean movingDown = false;
 
     //Networking stuff.
-    private ClientConnector clientConnector;
+    //private ClientConnector clientConnector;
 
     public SpriteBatch spriteBatch;
 
-    private AssetManager manager;  //<----- use to add soundtrack
+    private AssetManager manager;
 
     @Override
     public void create() {
         spriteBatch = new SpriteBatch();
 
         manager = new AssetManager();
-        //manager.load("path", Music.class);
-        //manager.finishLoading();
+        manager.load("audio/soundtrack.mp3", Music.class);
+        manager.finishLoading();
 
         Gdx.input.setInputProcessor(this);
 
-        clientConnector = new ClientConnector();
+        //clientConnector = new ClientConnector();
 
-        clientConnector.run();
+        //clientConnector.run();
 
         setScreen(new ClientScreen(this, manager));
     }
@@ -56,16 +57,17 @@ public class GameManager extends Game implements InputProcessor {
     @Override
     public void render() {
         super.render();
+
         if (movingLeft == true) {
-            clientConnector.send("left");
+            //clientConnector.send("left");
         } else if (movingRight == true) {
-            clientConnector.send("right");
+            //clientConnector.send("right");
         } else if (movingDown == true) {
-            clientConnector.send("down");
+            //clientConnector.send("down");
         } else if (movingUp == true) {
-            clientConnector.send("up");
+            //clientConnector.send("up");
         } else {
-            clientConnector.send("stop");
+            //clientConnector.send("stop");
         }
 
     }
@@ -146,4 +148,6 @@ public class GameManager extends Game implements InputProcessor {
     public boolean scrolled(int amount) {
         return false;
     }
+
+
 }

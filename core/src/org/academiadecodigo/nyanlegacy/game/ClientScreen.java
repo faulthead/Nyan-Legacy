@@ -5,7 +5,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -32,7 +36,11 @@ public class ClientScreen implements Screen {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
-//merge the things!!!!
+    private int[] background = new int[]{2};
+    private int[] starsBackground = new int[]{3};
+    private int[] starsForeground = new int[]{10};
+
+
 
     public ClientScreen(GameManager game, AssetManager manager) {
         this.game = game;
@@ -80,9 +88,21 @@ public class ClientScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        renderer.render();
+        renderer.setView(gameCam);
 
-        //game.spriteBatch.setProjectionMatrix(gameCam.combined);
+        renderer.render(background);
+        renderer.render(starsForeground);
+        renderer.render(starsBackground);
+
+        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(5);
+        TiledMapTileLayer.Cell cell =  layer.getCell(5, 5);
+        TiledMapTile tile = cell.getTile();
+        Texture texture = tile.getProperties().get();
+        texture.draw(Gdx.files.);
+
+        game.spriteBatch.setProjectionMatrix(gameCam.combined);
+        game.spriteBatch.begin();
+        texture.draw(Gdx.files.getFileHandle("nyancat_S_Main.1_50.png",  ).internal("nyancat_S_Main.1_50.png"),50,50 );
 
     }
 
