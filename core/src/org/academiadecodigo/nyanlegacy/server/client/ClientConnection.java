@@ -71,23 +71,29 @@ public class ClientConnection implements Runnable {
      */
     private void move(String move){
         if(move.equals("up") || position.getRow() > 0){
+            ServerLogic.getInstance().setPositionState(position.getCol(),position.getRow());
             position.setRow(position.getRow()-1);
             pixelPosition.setRow(ServerLogic.getInstance().libgdxConverter(position.getRow()));
+            isDead = ServerLogic.getInstance().collision(position.getCol(),position.getRow());
         }
         if(move.equals("down") || position.getRow() < ServerLogic.getInstance().TILESIZE - 1){
+            ServerLogic.getInstance().setPositionState(position.getCol(),position.getRow());
             position.setRow(position.getRow()+1);
             pixelPosition.setRow(ServerLogic.getInstance().libgdxConverter(position.getRow()));
+            isDead = ServerLogic.getInstance().collision(position.getCol(),position.getRow());
         }
         if(move.equals("left") || position.getCol() > 0){
+            ServerLogic.getInstance().setPositionState(position.getCol(),position.getRow());
             position.setCol(position.getCol()-1);
             pixelPosition.setCol(ServerLogic.getInstance().libgdxConverter(position.getCol()));
+            isDead = ServerLogic.getInstance().collision(position.getCol(),position.getRow());
         }
         if(move.equals("right") || position.getCol() < ServerLogic.getInstance().TILESIZE - 1){
+            ServerLogic.getInstance().setPositionState(position.getCol(),position.getRow());
             position.setCol(position.getCol()+1);
             pixelPosition.setCol(ServerLogic.getInstance().libgdxConverter(position.getCol()));
+            isDead = ServerLogic.getInstance().collision(position.getCol(),position.getRow());
         }
-
-        isDead = ServerLogic.getInstance().collision(position.getCol(),position.getRow());
     }
 
     /**
