@@ -8,8 +8,6 @@ import java.net.*;
  */
 public class ClientConnector implements Runnable{
 
-    //Connector class.
-
     private DatagramSocket clientSocket;
     private InetAddress IPAddress;
     private int port = 8080;
@@ -60,8 +58,6 @@ public class ClientConnector implements Runnable{
 
                 sentence = new String(receiveData, 0, receivePacket.getLength());
 
-                //System.out.println(sentence);
-
                 while (true) {
 
                     receivePacket = new DatagramPacket(receiveData, receiveData.length);
@@ -78,7 +74,6 @@ public class ClientConnector implements Runnable{
                         gameManager.render();
                     }
 
-                    //System.out.println(sentence);
                 }
 
             }
