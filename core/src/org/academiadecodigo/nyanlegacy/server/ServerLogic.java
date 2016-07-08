@@ -46,16 +46,6 @@ public final class ServerLogic {
         return false;
     }
 
-
-    /**
-     * this method will convert the position number into pixels values.
-     */
-    public int libgdxConverter(int number) {
-
-        return number * CELLSIZE;
-    }
-
-
     /**
      * this method sets the position state to true which means that, the player it´s leaving his trace on that position.
      *

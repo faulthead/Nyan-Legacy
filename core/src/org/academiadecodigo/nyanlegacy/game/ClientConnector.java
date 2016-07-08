@@ -11,8 +11,6 @@ public class ClientConnector implements Runnable{
     private DatagramSocket clientSocket;
     private InetAddress IPAddress;
     private int port = 8080;
-    private byte[] sendData;
-    private byte[] receiveData;
     private String sentence = "";
     private String message = "";
     private DatagramPacket sendPacket;
@@ -30,10 +28,6 @@ public class ClientConnector implements Runnable{
 
             IPAddress = InetAddress.getByName("192.168.1.27");
 
-            receiveData = new byte[1024];
-
-            sendData = new byte[1024];
-
         } catch (SocketException e) {
             System.out.println(e.getMessage());
         } catch (UnknownHostException e) {
@@ -43,6 +37,7 @@ public class ClientConnector implements Runnable{
         thread = new Thread() {
             @Override
             public void run() {
+                byte[] receiveData = new byte[1024];
 
                 receivePacket = new DatagramPacket(receiveData, receiveData.length);
 
@@ -52,13 +47,14 @@ public class ClientConnector implements Runnable{
                     System.out.println(e.getMessage());
                 }
 
-                port = receivePacket.getPort();
-
-                System.out.println(port);
+                if(receivePacket.getPort() != -1){
+                    port = receivePacket.getPort();
+                }
 
                 sentence = new String(receiveData, 0, receivePacket.getLength());
 
                 while (true) {
+                    receiveData = new byte[1024];
 
                     receivePacket = new DatagramPacket(receiveData, receiveData.length);
 
@@ -84,6 +80,9 @@ public class ClientConnector implements Runnable{
     public void run() {
 
         while (true) {
+
+            byte[] sendData;
+
             try {
 
                 sendData = message.getBytes();

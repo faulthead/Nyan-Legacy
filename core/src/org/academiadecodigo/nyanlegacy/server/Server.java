@@ -76,7 +76,7 @@ public class Server {
 
         try {
 
-            while (clients.size() < 2) {
+            while (clients.size() < 1) {
                 receiveData = new byte[1024];
                 DatagramPacket receive = new DatagramPacket(receiveData, receiveData.length);
                 serverSocket.receive(receive);
@@ -91,8 +91,6 @@ public class Server {
                     pool.submit(client);
 
                     client.send("### You Connected ###");
-                    System.out.println("message sent");
-                    System.out.println("does this client exist?" + clientExists(receive));
                 }
             }
 
@@ -116,10 +114,8 @@ public class Server {
      */
     private void setPositions() {
         clients.get(0).setPosition(new Position(0, 0));
-        clients.get(0).setPixelPosition(new Position(0, 50));
 
-        clients.get(1).setPosition(new Position(20, 20));
-        clients.get(1).setPixelPosition(new Position(1000, 1050));
+       // clients.get(1).setPosition(new Position(20, 20));
     }
 
     /**
@@ -128,7 +124,7 @@ public class Server {
     private synchronized void startGame() {
         sendToAll("start");
         sendToAll(clients.get(0).toJSON());
-        sendToAll(clients.get(1).toJSON());
+        //sendToAll(clients.get(1).toJSON());
 
         gameStarted = true;
 

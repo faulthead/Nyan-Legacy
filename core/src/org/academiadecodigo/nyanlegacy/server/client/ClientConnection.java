@@ -23,7 +23,6 @@ public class ClientConnection implements Runnable {
     private byte[] receiveData;
 
     private Position position;
-    private Position pixelPosition;
     private boolean isDead;
 
     public ClientConnection(Server server, InetAddress address, int port) throws SocketException {
@@ -31,8 +30,6 @@ public class ClientConnection implements Runnable {
         this.server = server;
         this.address = address;
         this.port = port;
-        sendData = new byte[1024];
-        receiveData = new byte[1024];
 
         socket = new DatagramSocket();
         System.out.println("NEW CLIENT CONNECTION PORT: " + socket.getLocalPort());
@@ -46,8 +43,7 @@ public class ClientConnection implements Runnable {
                 if (server.isGameStarted()) {
 
                     if(!isDead) {
-
-                        System.out.println("here");
+                        receiveData = new byte[1024];
 
                         DatagramPacket receiveMessage = new DatagramPacket(receiveData, receiveData.length);
                         socket.receive(receiveMessage);
@@ -76,30 +72,28 @@ public class ClientConnection implements Runnable {
      * @param move the respective movement to make
      */
     private void move(String move){
-        if(move.equals("up") || position.getRow() > 0){
+        if(move.equals("up") && position.getRow() > 0){
             ServerLogic.getInstance().setPositionState(position.getCol(),position.getRow());
             position.setRow(position.getRow()-1);
-            pixelPosition.setRow(ServerLogic.getInstance().libgdxConverter(position.getRow()));
             isDead = ServerLogic.getInstance().collision(position.getCol(),position.getRow());
         }
-        if(move.equals("down") || position.getRow() < ServerLogic.getInstance().TILESIZE - 1){
+        if(move.equals("down") && position.getRow() < ServerLogic.getInstance().TILESIZE - 1){
             ServerLogic.getInstance().setPositionState(position.getCol(),position.getRow());
             position.setRow(position.getRow()+1);
-            pixelPosition.setRow(ServerLogic.getInstance().libgdxConverter(position.getRow()));
             isDead = ServerLogic.getInstance().collision(position.getCol(),position.getRow());
         }
-        if(move.equals("left") || position.getCol() > 0){
+        if(move.equals("left") && position.getCol() > 0){
             ServerLogic.getInstance().setPositionState(position.getCol(),position.getRow());
             position.setCol(position.getCol()-1);
-            pixelPosition.setCol(ServerLogic.getInstance().libgdxConverter(position.getCol()));
             isDead = ServerLogic.getInstance().collision(position.getCol(),position.getRow());
         }
-        if(move.equals("right") || position.getCol() < ServerLogic.getInstance().TILESIZE - 1){
+        if(move.equals("right") && position.getCol() < ServerLogic.getInstance().TILESIZE - 1){
             ServerLogic.getInstance().setPositionState(position.getCol(),position.getRow());
             position.setCol(position.getCol()+1);
-            pixelPosition.setCol(ServerLogic.getInstance().libgdxConverter(position.getCol()));
             isDead = ServerLogic.getInstance().collision(position.getCol(),position.getRow());
         }
+
+        System.out.println("Col:" + position.getCol() + "row:" + position.getRow() + "dead:" + isDead);
     }
 
     /**
@@ -107,7 +101,7 @@ public class ClientConnection implements Runnable {
      * @return a String
      */
     public String toJSON() {
-        return "" + address + ":" + pixelPosition.getCol() + ":" + pixelPosition.getRow() + ":" + isDead + "";
+        return "" + address + ":" + position.getCol() + ":" + position.getRow() + ":" + isDead + "";
     }
 
     /**
@@ -117,6 +111,7 @@ public class ClientConnection implements Runnable {
      */
     public void send(String message) {
 
+            sendData = new byte[1024];
             sendData = message.getBytes();
             DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, address, port);
             try {
@@ -138,14 +133,6 @@ public class ClientConnection implements Runnable {
 
     public void setDead(boolean dead) {
         isDead = dead;
-    }
-
-    public Position getPixelPosition() {
-        return pixelPosition;
-    }
-
-    public void setPixelPosition(Position pixelPosition) {
-        this.pixelPosition = pixelPosition;
     }
 
     public InetAddress getAddress() {

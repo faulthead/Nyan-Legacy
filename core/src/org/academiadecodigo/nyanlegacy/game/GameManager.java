@@ -67,8 +67,7 @@ public class GameManager extends Game implements InputProcessor {
         if (movingLeft) {
             clientConnector.send("left");
             System.out.println("left");
-        }
-        if (movingRight) {
+        }if (movingRight) {
             clientConnector.send("right");
             System.out.println("right");
         }
