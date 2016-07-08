@@ -65,7 +65,7 @@ public class GameManager extends Game implements InputProcessor {
         } else if (movingUp == true) {
             clientConnector.send("up");
         } else {
-            clientConnector.send("stop");
+            //clientConnector.send("stop");
         }
 
     }

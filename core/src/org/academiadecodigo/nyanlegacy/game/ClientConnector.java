@@ -16,6 +16,7 @@ public class ClientConnector implements Runnable {
     private byte[] sendData;
     private byte[] receiveData;
     private String sentence = "";
+    private String message = "";
     private DatagramPacket sendPacket;
     private DatagramPacket receivePacket;
 
@@ -35,6 +36,33 @@ public class ClientConnector implements Runnable {
         } catch (UnknownHostException e) {
             System.out.println(e.getMessage());
         }
+
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                while (true) {
+                    try {
+
+                        sendData = message.getBytes();
+
+                        sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
+
+                        clientSocket.send(sendPacket);
+
+
+                    } catch (SocketException e) {
+                        System.out.println(e.getMessage());
+                    } catch (UnknownHostException e) {
+                        System.out.println(e.getMessage());
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+            }
+        };
+
+        thread.start();
     }
 
     @Override
@@ -72,20 +100,6 @@ public class ClientConnector implements Runnable {
     }
 
     public void send(String message) {
-        try {
-
-            sendData = message.getBytes();
-
-            sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
-
-            clientSocket.send(sendPacket);
-
-        } catch (SocketException e) {
-            System.out.println(e.getMessage());
-        } catch (UnknownHostException e) {
-            System.out.println(e.getMessage());
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        this.message = message;
     }
 }
