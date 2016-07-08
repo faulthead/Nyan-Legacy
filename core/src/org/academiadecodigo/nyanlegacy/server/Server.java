@@ -119,7 +119,7 @@ public class Server {
     }
 
     /**
-     * Start the game by send it to all the players
+     * Start the game by send it to all the players.
      */
     private synchronized void startGame() {
         sendToAll("start");
