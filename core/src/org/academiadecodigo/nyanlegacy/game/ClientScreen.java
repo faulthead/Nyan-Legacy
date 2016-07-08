@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -18,7 +19,12 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.academiadecodigo.nyanlegacy.game.game_objects.GameObject;
+import org.academiadecodigo.nyanlegacy.game.game_objects.NyanCat;
+import org.academiadecodigo.nyanlegacy.game.game_objects.PinkNyanCat;
 import org.academiadecodigo.nyanlegacy.game.tools.B2WorldCreator;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class ClientScreen implements Screen {
 
@@ -42,6 +48,9 @@ public class ClientScreen implements Screen {
     private int[] starsForeground = new int[]{10};
 
     private GameObject[][] gameObjects;
+
+    private GameObject player1;
+
 
 
     public ClientScreen(GameManager game, AssetManager manager) {
@@ -72,14 +81,42 @@ public class ClientScreen implements Screen {
         creator.addGameObject(gameObject, x, y);
     }
 
-    private void handleInput(float dt) {
+    private void handleInput(String sentence) throws UnknownHostException {
+        //1 substring to remove /
+        //array that splits string
+        //then split : ---> resulting array:
+        ///verify if ip == local ip --> atribuir player
+        //get position
+        //booblean is dead
 
-        //merge?????
+        String result = sentence.substring(1);
+
+        String[] resultArray = result.split(":");
+
+        String ip = resultArray[0];
+        int x = Integer.parseInt(resultArray[1]);
+        int y = Integer.parseInt(resultArray[2]);
+        boolean isDead = Boolean.parseBoolean(resultArray[3]);
+
+
+        if (InetAddress.getLocalHost().equals(ip)){
+            player1 = new NyanCat(this, new MapObject());
+            player1.setPosition((GameManager.WIDTH / 2) - (player1.getTexture().getWidth() / 2) / GameManager.PPM,
+                    (GameManager.HEIGHT/2) - (player1.getTexture().getHeight() / 2) / GameManager.PPM);
+            gameObjects[x][y] = player1;
+
+        }else {
+            gameObjects[x][y] = player1;
+            player1 = new PinkNyanCat(this, new MapObject());
+            player1.setPosition((GameManager.WIDTH/2) - (player1.getTexture().getWidth()/2)/GameManager.PPM,
+                    (GameManager.HEIGHT/2) - (player1.getTexture().getHeight()/2)/GameManager.PPM);
+        }
+
     }
 
-    public void update(float dt) {
 
-        handleInput(dt);
+
+    public void update(float dt) {
 
         world.step(1 / 60f, 6, 2);
 
