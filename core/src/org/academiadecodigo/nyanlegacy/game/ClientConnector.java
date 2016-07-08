@@ -66,10 +66,14 @@ public class ClientConnector implements Runnable{
 
                     sentence = new String(receiveData, 0, receivePacket.getLength());
 
+                    System.out.println(sentence);
+
                     if (sentence.equals("start")) {
+                        System.out.println("START");
                         gameManager.render();
                     } else {
                         try {
+                            System.out.println("never here");
                             gameManager.getClientScreen().handleInput(sentence);
                         } catch (UnknownHostException e) {
                             e.printStackTrace();

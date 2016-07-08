@@ -1,5 +1,6 @@
 package org.academiadecodigo.nyanlegacy.game;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import org.academiadecodigo.nyanlegacy.game.game_objects.GameObject;
 import org.academiadecodigo.nyanlegacy.game.game_objects.NyanCat;
 import org.academiadecodigo.nyanlegacy.game.game_objects.PinkNyanCat;
@@ -100,11 +102,13 @@ public class ClientScreen implements Screen {
 
 
         if (InetAddress.getLocalHost().equals(ip)){
+            System.out.println("MINE");
             player1 = new NyanCat(this, new MapObject());
             player1.setPosition(x,y);
             gameObjects[x][y] = player1;
 
         }else {
+            System.out.println("YOURS");
             gameObjects[x][y] = player1;
             player1 = new PinkNyanCat(this, new MapObject());
             player1.setPosition(x,y);
@@ -138,11 +142,11 @@ public class ClientScreen implements Screen {
         if (!gameObjectsIsEmpty()) {
             game.spriteBatch.begin();
 
-
             //draw bidimensional array
             for (int row = 0; row < gameObjects.length; row++) {
                 for (int col = 1; col < gameObjects.length; col++) {
                     if (gameObjects[row][col] != null) {
+                        System.out.println("DRAW");
                         game.spriteBatch.draw(gameObjects[row][col].getTexture(), row * 50 / GameManager.PPM, col * 50 / GameManager.PPM);
                     }
                 }
@@ -163,20 +167,18 @@ public class ClientScreen implements Screen {
 
     private boolean gameObjectsIsEmpty() {
 
-        boolean isEmpty = false;
-
         for (int i = 0; i < gameObjects.length; i++) {
             for (int j = 0; j < gameObjects.length; j++) {
                 if (gameObjects[i][j] != null) {
-                    isEmpty = false;
-                    break;
+                    System.out.println("break????");
+                    return false;
+
                 }
-                isEmpty = true;
 
             }
 
         }
-        return isEmpty;
+        return true;
     }
 
     @Override

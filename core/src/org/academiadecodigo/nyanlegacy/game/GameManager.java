@@ -57,16 +57,16 @@ public class GameManager extends Game implements InputProcessor {
         clientScreen = new ClientScreen(this, manager);
 
         setScreen(clientScreen);
+
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        executorService.submit(clientConnector);
+        executorService.submit(clientConnector.getThread());
     }
 
     @Override
     public void render() {
 
         super.render();
-
-        ExecutorService executorService = Executors.newFixedThreadPool(2);
-        executorService.submit(clientConnector);
-        executorService.submit(clientConnector.getThread());
 
         if (movingLeft) {
             clientConnector.send("left");
