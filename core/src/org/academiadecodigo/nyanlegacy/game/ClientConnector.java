@@ -8,7 +8,7 @@ import java.net.*;
  */
 public class ClientConnector implements Runnable {
 
-    //Connector class
+    //Connector class.
 
     private DatagramSocket clientSocket;
     private InetAddress IPAddress;
