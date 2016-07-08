@@ -101,15 +101,13 @@ public class ClientScreen implements Screen {
 
         if (InetAddress.getLocalHost().equals(ip)){
             player1 = new NyanCat(this, new MapObject());
-            player1.setPosition((GameManager.WIDTH / 2) - (player1.getTexture().getWidth() / 2) / GameManager.PPM,
-                    (GameManager.HEIGHT/2) - (player1.getTexture().getHeight() / 2) / GameManager.PPM);
+            player1.setPosition(x,y);
             gameObjects[x][y] = player1;
 
         }else {
             gameObjects[x][y] = player1;
             player1 = new PinkNyanCat(this, new MapObject());
-            player1.setPosition((GameManager.WIDTH/2) - (player1.getTexture().getWidth()/2)/GameManager.PPM,
-                    (GameManager.HEIGHT/2) - (player1.getTexture().getHeight()/2)/GameManager.PPM);
+            player1.setPosition(x,y);
         }
 
     }

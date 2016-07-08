@@ -50,8 +50,6 @@ public class ClientConnection implements Runnable {
 
                         String message = new String(receiveData, 0, receiveMessage.getLength());
 
-                        System.out.println(message);
-
                         move(message);
 
                         server.sendToAll(toJSON());
@@ -92,8 +90,6 @@ public class ClientConnection implements Runnable {
             position.setCol(position.getCol()+1);
             isDead = ServerLogic.getInstance().collision(position.getCol(),position.getRow());
         }
-
-        System.out.println("Col:" + position.getCol() + "row:" + position.getRow() + "dead:" + isDead);
     }
 
     /**
