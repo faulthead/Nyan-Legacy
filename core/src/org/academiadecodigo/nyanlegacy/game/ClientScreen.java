@@ -17,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import org.academiadecodigo.nyanlegacy.game.game_objects.GameObject;
 import org.academiadecodigo.nyanlegacy.game.tools.B2WorldCreator;
 
 public class ClientScreen implements Screen {
@@ -40,6 +41,7 @@ public class ClientScreen implements Screen {
     private int[] starsBackground = new int[]{3};
     private int[] starsForeground = new int[]{10};
 
+    private GameObject[][] gameObjects;
 
 
     public ClientScreen(GameManager game, AssetManager manager) {
@@ -66,6 +68,9 @@ public class ClientScreen implements Screen {
 
     }
 
+    private void addGameObject(GameObject gameObject, int x, int y) {
+        creator.addGameObject(gameObject, x, y);
+    }
 
     private void handleInput(float dt) {
 
@@ -91,9 +96,25 @@ public class ClientScreen implements Screen {
         renderer.setView(gameCam);
 
         renderer.render(background);
-        renderer.render(starsForeground);
-
         renderer.render(starsBackground);
+
+        game.spriteBatch.setProjectionMatrix(gameCam.combined);
+
+        if (!gameObjectsIsEmpty()) {
+            game.spriteBatch.begin();
+
+
+            //draw bidimensional array
+            for (int row = 0; row < gameObjects.length; row++) {
+                for (int col = 1; col < gameObjects.length; col++) {
+                    if (gameObjects[row][col] != null) {
+                        game.spriteBatch.draw(gameObjects[row][col].getTexture(), row * 50 / GameManager.PPM, col * 50 / GameManager.PPM);
+                    }
+                }
+            }
+
+        }
+        renderer.render(starsForeground);
 
         /*TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(5);
         TiledMapTileLayer.Cell cell =  layer.getCell(5, 5);
@@ -101,10 +122,26 @@ public class ClientScreen implements Screen {
         Texture texture = tile.getProperties().get();
         texture.draw(Gdx.files.);*/
 
-        game.spriteBatch.setProjectionMatrix(gameCam.combined);
-        game.spriteBatch.begin();
         //texture.draw(Gdx.files.getFileHandle("nyancat_S_Main.1_50.png",  ).internal("nyancat_S_Main.1_50.png"),50,50 );
 
+    }
+
+    private boolean gameObjectsIsEmpty() {
+
+        boolean isEmpty = false;
+
+        for (int i = 0; i < gameObjects.length; i++) {
+            for (int j = 0; j < gameObjects.length; j++) {
+                if (gameObjects[i][j] != null) {
+                    isEmpty = false;
+                    break;
+                }
+                isEmpty = true;
+
+            }
+
+        }
+        return isEmpty;
     }
 
     @Override
@@ -149,5 +186,9 @@ public class ClientScreen implements Screen {
 
     public TiledMap getMap() {
         return map;
+    }
+
+    public void setGameObjects(GameObject[][] gameObjects) {
+        this.gameObjects = gameObjects;
     }
 }
