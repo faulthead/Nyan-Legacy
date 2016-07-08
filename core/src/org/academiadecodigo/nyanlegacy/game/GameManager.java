@@ -35,7 +35,7 @@ public class GameManager extends Game implements InputProcessor {
     private boolean movingDown = false;
     //Networking stuff.
     private ClientConnector clientConnector;
-    private AssetManager manager;  //<----- use to add soundtrack
+    private AssetManager manager;  //<----- use to add soundtrack.
 
     @Override
     public void create() {
