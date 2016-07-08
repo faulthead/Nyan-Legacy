@@ -117,7 +117,7 @@ public class Server {
     /**
      * Start the game by send it to all the players
      */
-    private void startGame() {
+    private synchronized void startGame() {
         sendToAll("start");
         sendToAll(clients.get(0).toString());
         sendToAll(clients.get(1).toString());
@@ -125,9 +125,11 @@ public class Server {
         gameStarted = true;
 
         while (true) {
-            /*for (ClientConnection client:clients) {
-                sendToAll(client.toString());
-            }*/
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -147,7 +149,7 @@ public class Server {
      *
      * @return gameStarted
      */
-    public boolean isGameStarted() {
+    public synchronized boolean isGameStarted() {
         return gameStarted;
     }
 }
