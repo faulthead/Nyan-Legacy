@@ -8,9 +8,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 /**
  * Created by Cadavre Exquis on 07-07-2016.
  */
@@ -63,24 +60,24 @@ public class GameManager extends Game implements InputProcessor {
 
        /* ExecutorService executorService = Executors.newFixedThreadPool(2);
         executorService.submit(clientConnector);
-       /executorService.submit(clientConnector.getThread());
+       /executorService.submit(clientConnector.getThread());*/
 
         if (movingLeft) {
-            clientConnector.send("left");
+            //clientConnector.send("left");
             System.out.println("left");
         }
-       if (movingRight) {
-            clientConnector.send("right");
+        if (movingRight) {
+            //clientConnector.send("right");
             System.out.println("right");
         }
-       if (movingDown) {
-          clientConnector.send("down");
+        if (movingDown) {
+            //clientConnector.send("down");
             System.out.println("down");
         }
-       if (movingUp) {
-            clientConnector.send("up");
+        if (movingUp) {
+            //clientConnector.send("up");
             System.out.println("up");
-        }*/
+        }
 
     }
 
