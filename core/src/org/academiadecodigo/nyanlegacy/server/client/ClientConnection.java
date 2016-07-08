@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketException;
 
 /**
  * Created by joaoc on 07/07/2016.
@@ -25,15 +26,16 @@ public class ClientConnection implements Runnable {
     private Position pixelPosition;
     private boolean isDead;
 
-    public ClientConnection(Server server, DatagramSocket socket, InetAddress address, int port) {
+    public ClientConnection(Server server, InetAddress address, int port) throws SocketException {
+
         this.server = server;
-        this.socket = socket;
         this.address = address;
         this.port = port;
         sendData = new byte[1024];
         receiveData = new byte[1024];
 
-        System.out.println(socket.getPort());
+        socket = new DatagramSocket();
+        System.out.println("NEW CLIENT CONNECTION PORT: " + socket.getLocalPort());
     }
 
     @Override
@@ -56,7 +58,7 @@ public class ClientConnection implements Runnable {
 
                         move(message);
 
-                        server.sendToAll(toString());
+                        server.sendToAll(toJSON());
                     }
 
                 }
@@ -104,7 +106,7 @@ public class ClientConnection implements Runnable {
      * generates a String with the respective attributes of the client.
      * @return a String
      */
-    public String toString() {
+    public String toJSON() {
         return "" + address + ":" + pixelPosition.getCol() + ":" + pixelPosition.getRow() + ":" + isDead + "";
     }
 

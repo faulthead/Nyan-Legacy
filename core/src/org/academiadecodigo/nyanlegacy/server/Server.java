@@ -6,11 +6,9 @@ import org.academiadecodigo.nyanlegacy.server.client.Position;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -48,6 +46,7 @@ public class Server {
     public void startServer() {
         try {
             serverSocket = new DatagramSocket(port);
+            System.out.println("SERVER SOCKET:" + serverSocket.getLocalPort());
 
             while (true) {
 
@@ -74,24 +73,26 @@ public class Server {
      */
     private void waitForConnections() {
 
-        receiveData = new byte[1024];
 
         try {
 
             while (clients.size() < 2) {
+                receiveData = new byte[1024];
                 DatagramPacket receive = new DatagramPacket(receiveData, receiveData.length);
                 serverSocket.receive(receive);
 
-                if (clientExists(receive)) {
+                if (!clientExists(receive)) {
 
                     System.out.println("### User: " + receive.getAddress() + " has enter the room ###");
-
-                    ClientConnection client = new ClientConnection(this, new DatagramSocket(), receive.getAddress(), receive.getPort());
+                    System.out.println("RECEIVED: " + receive.getPort() + " " + receive.getAddress());
+                    ClientConnection client = new ClientConnection(this, receive.getAddress(), receive.getPort());
 
                     clients.add(client);
                     pool.submit(client);
 
                     client.send("### You Connected ###");
+                    System.out.println("message sent");
+                    System.out.println("does this client exist?" + clientExists(receive));
                 }
             }
 
@@ -126,8 +127,8 @@ public class Server {
      */
     private synchronized void startGame() {
         sendToAll("start");
-        sendToAll(clients.get(0).toString());
-        sendToAll(clients.get(1).toString());
+        sendToAll(clients.get(0).toJSON());
+        sendToAll(clients.get(1).toJSON());
 
         gameStarted = true;
 
