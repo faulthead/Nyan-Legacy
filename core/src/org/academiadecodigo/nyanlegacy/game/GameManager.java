@@ -58,16 +58,16 @@ public class GameManager extends Game implements InputProcessor {
         super.render();
         if (movingLeft == true) {
             clientConnector.send("left");
-        } else if (movingRight == true) {
-            clientConnector.send("right");
-        } else if (movingDown == true) {
-            clientConnector.send("down");
-        } else if (movingUp == true) {
-            clientConnector.send("up");
-        } else {
-            //clientConnector.send("stop");
         }
-
+        if (movingRight == true) {
+            clientConnector.send("right");
+        }
+        if (movingDown == true) {
+            clientConnector.send("down");
+        }
+        if (movingUp == true) {
+            clientConnector.send("up");
+        }
     }
 
     @Override
