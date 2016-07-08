@@ -38,6 +38,8 @@ public class GameManager extends Game implements InputProcessor {
 
     public SpriteBatch spriteBatch;
 
+    private ClientScreen clientScreen;
+
     private AssetManager manager;  //<----- use to add soundtrack
 
     @Override
@@ -52,7 +54,9 @@ public class GameManager extends Game implements InputProcessor {
 
         clientConnector = new ClientConnector(this);
 
-        setScreen(new ClientScreen(this, manager));
+        clientScreen = new ClientScreen(this, manager);
+
+        setScreen(clientScreen);
     }
 
     @Override
@@ -157,5 +161,9 @@ public class GameManager extends Game implements InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         return false;
+    }
+
+    public ClientScreen getClientScreen() {
+        return clientScreen;
     }
 }

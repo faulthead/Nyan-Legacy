@@ -81,7 +81,7 @@ public class ClientScreen implements Screen {
         creator.addGameObject(gameObject, x, y);
     }
 
-    private void handleInput(String sentence) throws UnknownHostException {
+    public void handleInput(String sentence) throws UnknownHostException {
         //1 substring to remove /
         //array that splits string
         //then split : ---> resulting array:
