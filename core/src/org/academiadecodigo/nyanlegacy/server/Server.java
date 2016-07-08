@@ -125,9 +125,9 @@ public class Server {
         gameStarted = true;
 
         while (true) {
-            //for (ClientConnection client:clients) {
-              //  sendToAll(client.toString());
-           // }
+            /*for (ClientConnection client:clients) {
+                sendToAll(client.toString());
+            }*/
         }
     }
 

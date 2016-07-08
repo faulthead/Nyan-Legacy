@@ -57,23 +57,17 @@ public class GameManager extends Game implements InputProcessor {
     public void render() {
         super.render();
         if (movingLeft == true) {
-            System.out.println("left");
             clientConnector.send("left");
-        }
-        if (movingRight == true) {
-            System.out.println("right");
+        } else if (movingRight == true) {
             clientConnector.send("right");
-        }
-        if (movingDown == true) {
-            System.out.println("down");
+        } else if (movingDown == true) {
             clientConnector.send("down");
-        }
-        if (movingUp == true) {
-            System.out.println("up");
+        } else if (movingUp == true) {
             clientConnector.send("up");
+        } else {
+            clientConnector.send("stop");
         }
-        System.out.println("stop");
-        clientConnector.send("stop");
+
     }
 
     @Override
@@ -81,6 +75,7 @@ public class GameManager extends Game implements InputProcessor {
         super.dispose();
         manager.dispose();
         spriteBatch.dispose();
+
     }
 
 

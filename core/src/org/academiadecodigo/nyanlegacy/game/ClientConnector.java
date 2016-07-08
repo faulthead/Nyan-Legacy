@@ -18,8 +18,6 @@ public class ClientConnector implements Runnable {
     private String sentence = "";
     private DatagramPacket sendPacket;
     private DatagramPacket receivePacket;
-    private String modifiedSentence = "";
-    private Thread thread;
 
     public ClientConnector() {
         try {
@@ -36,62 +34,52 @@ public class ClientConnector implements Runnable {
             System.out.println(e.getMessage());
         } catch (UnknownHostException e) {
             System.out.println(e.getMessage());
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
         }
-
-        thread = new Thread() {
-            @Override
-            public void run() {
-                super.run();
-
-                receivePacket = new DatagramPacket(receiveData, receiveData.length);
-
-                try {
-                    clientSocket.receive(receivePacket);
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
-
-                port = receivePacket.getPort();
-
-                sentence = new String(receiveData, 0, receivePacket.getLength());
-
-                System.out.println(sentence);
-
-                while (true) {
-
-                    receivePacket = new DatagramPacket(receiveData, receiveData.length);
-
-                    try {
-                        clientSocket.receive(receivePacket);
-                    } catch (IOException e) {
-                        System.out.println(e.getMessage());
-                    }
-
-                    sentence = new String(receiveData, 0, receivePacket.getLength());
-
-                    System.out.println(sentence);
-                }
-            }
-        };
-
-        thread.start();
     }
 
     @Override
     public void run() {
 
+        receivePacket = new DatagramPacket(receiveData, receiveData.length);
+
+        try {
+            clientSocket.receive(receivePacket);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        port = receivePacket.getPort();
+
+        sentence = new String(receiveData, 0, receivePacket.getLength());
+
+        System.out.println(sentence);
+
+        while (true) {
+
+            receivePacket = new DatagramPacket(receiveData, receiveData.length);
+
+            try {
+                clientSocket.receive(receivePacket);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+
+            sentence = new String(receiveData, 0, receivePacket.getLength());
+
+            System.out.println(sentence);
+        }
+
+    }
+
+    public void send(String message) {
         try {
 
-            while (true) {
+            sendData = message.getBytes();
 
-                sendData = modifiedSentence.getBytes();
+            sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
 
-                sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
+            clientSocket.send(sendPacket);
 
-                clientSocket.send(sendPacket);
-            }
         } catch (SocketException e) {
             System.out.println(e.getMessage());
         } catch (UnknownHostException e) {
@@ -99,9 +87,5 @@ public class ClientConnector implements Runnable {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    public void send(String message) {
-        modifiedSentence = message;
     }
 }
