@@ -25,7 +25,7 @@ public class B2WorldCreator {
 
         //set container in client screen
 
-        gameObjects = new GameObject[21][21];
+        gameObjects = new GameObject[22][22];
 
         clientScreen.setGameObjects(gameObjects);
 

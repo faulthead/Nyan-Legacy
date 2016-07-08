@@ -94,8 +94,8 @@ public class ClientScreen implements Screen {
             String[] resultArray = result.split(":");
 
             String ip = resultArray[0];
-            int x = Integer.parseInt(resultArray[1]);
-            int y = Integer.parseInt(resultArray[2]);
+            int x = Integer.parseInt(resultArray[1])+1;
+            int y = Integer.parseInt(resultArray[2])+1;
             boolean isDead = Boolean.parseBoolean(resultArray[3]);
 
             if (InetAddress.getLocalHost().getHostAddress().equals(ip)) {
@@ -151,7 +151,7 @@ public class ClientScreen implements Screen {
             game.spriteBatch.begin();
 
             //draw bidimensional array
-            for (int row = 0; row < gameObjects.length; row++) {
+            for (int row = 1; row < gameObjects.length; row++) {
                 for (int col = 1; col < gameObjects.length; col++) {
                     if (gameObjects[row][col] != null) {
                         game.spriteBatch.draw(gameObjects[row][col].getTexture(), row * 50 / GameManager.PPM, col * 50 / GameManager.PPM);

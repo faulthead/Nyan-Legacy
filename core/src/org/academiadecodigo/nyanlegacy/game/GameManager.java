@@ -18,7 +18,7 @@ public class GameManager extends Game implements InputProcessor {
 
     //Game norms and constants that are used by various classes
     public static final int WIDTH = 1050;
-    public static final int HEIGHT = WIDTH;
+    public static final int HEIGHT = 1050;
     public static final float PPM = 100;
 
     //bits equivalent to layers in tiled
