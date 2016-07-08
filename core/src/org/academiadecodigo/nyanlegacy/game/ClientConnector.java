@@ -56,9 +56,11 @@ public class ClientConnector implements Runnable{
 
                 port = receivePacket.getPort();
 
+                System.out.println(port);
+
                 sentence = new String(receiveData, 0, receivePacket.getLength());
 
-                System.out.println(sentence);
+                //System.out.println(sentence);
 
                 while (true) {
 
@@ -76,7 +78,7 @@ public class ClientConnector implements Runnable{
                         gameManager.render();
                     }
 
-                    System.out.println(sentence);
+                    //System.out.println(sentence);
                 }
 
             }
