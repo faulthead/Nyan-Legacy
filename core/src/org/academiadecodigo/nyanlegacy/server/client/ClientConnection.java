@@ -41,7 +41,7 @@ public class ClientConnection implements Runnable {
             try {
                 if (server.isGameStarted()) {
 
-                    if(!isDead) {
+                    if (!isDead) {
 
                         DatagramPacket receiveMessage = new DatagramPacket(receiveData, receiveData.length);
                         socket.receive(receiveMessage);
@@ -69,29 +69,30 @@ public class ClientConnection implements Runnable {
      *
      * @param move the respective movement to make.
      */
-    private void move(String move){
-        if(move.equals("up") || position.getRow() > 0){
-            position.setRow(position.getRow()-1);
+    private void move(String move) {
+        if (move.equals("up") || position.getRow() > 0) {
+            position.setRow(position.getRow() - 1);
             pixelPosition.setRow(ServerLogic.getInstance().libgdxConverter(position.getRow()));
         }
-        if(move.equals("down") || position.getRow() < ServerLogic.getInstance().TILESIZE - 1){
-            position.setRow(position.getRow()+1);
+        if (move.equals("down") || position.getRow() < ServerLogic.getInstance().TILESIZE - 1) {
+            position.setRow(position.getRow() + 1);
             pixelPosition.setRow(ServerLogic.getInstance().libgdxConverter(position.getRow()));
         }
-        if(move.equals("left") || position.getCol() > 0){
-            position.setCol(position.getCol()-1);
+        if (move.equals("left") || position.getCol() > 0) {
+            position.setCol(position.getCol() - 1);
             pixelPosition.setCol(ServerLogic.getInstance().libgdxConverter(position.getCol()));
         }
-        if(move.equals("right") || position.getCol() < ServerLogic.getInstance().TILESIZE - 1){
-            position.setCol(position.getCol()+1);
+        if (move.equals("right") || position.getCol() < ServerLogic.getInstance().TILESIZE - 1) {
+            position.setCol(position.getCol() + 1);
             pixelPosition.setCol(ServerLogic.getInstance().libgdxConverter(position.getCol()));
         }
 
-        isDead = ServerLogic.getInstance().collision(position.getCol(),position.getRow());
+        isDead = ServerLogic.getInstance().collision(position.getCol(), position.getRow());
     }
 
     /**
      * generates a String with the respective attributes of the client.
+     *
      * @return a String
      */
     public String toString() {
@@ -105,13 +106,13 @@ public class ClientConnection implements Runnable {
      */
     public void send(String message) {
 
-            sendData = message.getBytes();
-            DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, address, port);
-            try {
-                socket.send(sendPacket);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        sendData = message.getBytes();
+        DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, address, port);
+        try {
+            socket.send(sendPacket);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //GETTERS AND SETTERS

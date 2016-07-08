@@ -8,6 +8,9 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  * Created by Cadavre Exquis on 07-07-2016.
  */
@@ -35,7 +38,8 @@ public class GameManager extends Game implements InputProcessor {
 
     public SpriteBatch spriteBatch;
 
-    private AssetManager manager;
+    private ClientConnector clientConnector;
+    private AssetManager manager;  //<----- use to add soundtrack
 
     @Override
     public void create() {
@@ -47,27 +51,35 @@ public class GameManager extends Game implements InputProcessor {
 
         Gdx.input.setInputProcessor(this);
 
-        //clientConnector = new ClientConnector();
-
-        //clientConnector.run();
+        clientConnector = new ClientConnector(this);
 
         setScreen(new ClientScreen(this, manager));
     }
 
     @Override
     public void render() {
+
         super.render();
 
-        if (movingLeft == true) {
-            //clientConnector.send("left");
-        } else if (movingRight == true) {
-            //clientConnector.send("right");
-        } else if (movingDown == true) {
-            //clientConnector.send("down");
-        } else if (movingUp == true) {
-            //clientConnector.send("up");
-        } else {
-            //clientConnector.send("stop");
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        executorService.submit(clientConnector);
+        executorService.submit(clientConnector.getThread());
+
+        if (movingLeft) {
+            clientConnector.send("left");
+            //System.out.println("left");
+        }
+        if (movingRight) {
+            clientConnector.send("right");
+            //System.out.println("right");
+        }
+        if (movingDown) {
+            clientConnector.send("down");
+            //System.out.println("down");
+        }
+        if (movingUp) {
+            clientConnector.send("up");
+            //System.out.println("up");
         }
 
     }
@@ -148,6 +160,4 @@ public class GameManager extends Game implements InputProcessor {
     public boolean scrolled(int amount) {
         return false;
     }
-
-
 }

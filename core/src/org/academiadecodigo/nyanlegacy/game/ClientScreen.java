@@ -92,17 +92,18 @@ public class ClientScreen implements Screen {
 
         renderer.render(background);
         renderer.render(starsForeground);
+
         renderer.render(starsBackground);
 
-        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(5);
+        /*TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(5);
         TiledMapTileLayer.Cell cell =  layer.getCell(5, 5);
         TiledMapTile tile = cell.getTile();
         Texture texture = tile.getProperties().get();
-        texture.draw(Gdx.files.);
+        texture.draw(Gdx.files.);*/
 
         game.spriteBatch.setProjectionMatrix(gameCam.combined);
         game.spriteBatch.begin();
-        texture.draw(Gdx.files.getFileHandle("nyancat_S_Main.1_50.png",  ).internal("nyancat_S_Main.1_50.png"),50,50 );
+        //texture.draw(Gdx.files.getFileHandle("nyancat_S_Main.1_50.png",  ).internal("nyancat_S_Main.1_50.png"),50,50 );
 
     }
 
