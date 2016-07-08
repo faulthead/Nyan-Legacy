@@ -34,11 +34,11 @@ public class GameManager extends Game implements InputProcessor {
     private boolean movingDown = false;
 
     //Networking stuff.
-    //private ClientConnector clientConnector;
+
 
     public SpriteBatch spriteBatch;
 
-    private ClientConnector clientConnector;
+    //private ClientConnector clientConnector;
     private AssetManager manager;  //<----- use to add soundtrack
 
     @Override
@@ -51,7 +51,7 @@ public class GameManager extends Game implements InputProcessor {
 
         Gdx.input.setInputProcessor(this);
 
-        clientConnector = new ClientConnector(this);
+        //clientConnector = new ClientConnector(this);
 
         setScreen(new ClientScreen(this, manager));
     }
@@ -61,26 +61,26 @@ public class GameManager extends Game implements InputProcessor {
 
         super.render();
 
-        ExecutorService executorService = Executors.newFixedThreadPool(2);
+       /* ExecutorService executorService = Executors.newFixedThreadPool(2);
         executorService.submit(clientConnector);
-        executorService.submit(clientConnector.getThread());
+       /executorService.submit(clientConnector.getThread());
 
         if (movingLeft) {
             clientConnector.send("left");
-            //System.out.println("left");
+            System.out.println("left");
         }
-        if (movingRight) {
+       if (movingRight) {
             clientConnector.send("right");
-            //System.out.println("right");
+            System.out.println("right");
         }
-        if (movingDown) {
-            clientConnector.send("down");
-            //System.out.println("down");
+       if (movingDown) {
+          clientConnector.send("down");
+            System.out.println("down");
         }
-        if (movingUp) {
+       if (movingUp) {
             clientConnector.send("up");
-            //System.out.println("up");
-        }
+            System.out.println("up");
+        }*/
 
     }
 
