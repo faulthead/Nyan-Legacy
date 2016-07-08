@@ -32,6 +32,8 @@ public class ClientConnection implements Runnable {
         this.port = port;
         sendData = new byte[1024];
         receiveData = new byte[1024];
+
+        System.out.println(socket.getPort());
     }
 
     @Override
@@ -42,6 +44,8 @@ public class ClientConnection implements Runnable {
                 if (server.isGameStarted()) {
 
                     if(!isDead) {
+
+                        System.out.println("here");
 
                         DatagramPacket receiveMessage = new DatagramPacket(receiveData, receiveData.length);
                         socket.receive(receiveMessage);
@@ -140,5 +144,9 @@ public class ClientConnection implements Runnable {
 
     public void setPixelPosition(Position pixelPosition) {
         this.pixelPosition = pixelPosition;
+    }
+
+    public InetAddress getAddress() {
+        return address;
     }
 }
