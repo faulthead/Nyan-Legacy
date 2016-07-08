@@ -52,7 +52,7 @@ public class ClientConnection implements Runnable {
 
                         move(message);
 
-                        //server.sendToAll(toString());
+                        server.sendToAll(toString());
                     }
 
                 }
