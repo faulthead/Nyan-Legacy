@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -155,12 +156,16 @@ public class ClientScreen implements Screen {
                 for (int col = 1; col < gameObjects.length; col++) {
                     if (gameObjects[row][col] != null) {
                         game.spriteBatch.draw(gameObjects[row][col].getTexture(), row * 50 / GameManager.PPM, col * 50 / GameManager.PPM);
-                        System.out.println("DRAW");
+                        game.spriteBatch.draw(new Texture("nyancat2.png"), 0,0);
+                        System.out.println(gameObjects[row][col].getX() + " : " + gameObjects[row][col].getY());
+                        System.out.println("NYAN");
+                        System.out.println("nyan");
+                        System.out.println("NYAN");
+                        System.out.println("nyan");
                     }
                 }
             }
             game.spriteBatch.end();
-
         }
 
         /*TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(5);
