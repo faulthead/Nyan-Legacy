@@ -15,6 +15,7 @@ public class GameManager extends Game implements InputProcessor {
     //Game norms and constants that are used by various classes
     public static final int WIDTH = 1050;
     public static final int HEIGHT = WIDTH;
+
     //bits equivalent to layers in tiled
     public static final short GRID_BIT = 1;
     public static final short NYAN_BIT = 2;
@@ -55,23 +56,17 @@ public class GameManager extends Game implements InputProcessor {
     public void render() {
         super.render();
         if (movingLeft == true) {
-            System.out.println("left");
             clientConnector.send("left");
-        }
-        if (movingRight == true) {
-            System.out.println("right");
+        } else if (movingRight == true) {
             clientConnector.send("right");
-        }
-        if (movingDown == true) {
-            System.out.println("down");
+        } else if (movingDown == true) {
             clientConnector.send("down");
-        }
-        if (movingUp == true) {
-            System.out.println("up");
+        } else if (movingUp == true) {
             clientConnector.send("up");
+        } else {
+            clientConnector.send("stop");
         }
-        System.out.println("stop");
-        clientConnector.send("stop");
+
     }
 
     @Override
@@ -79,6 +74,7 @@ public class GameManager extends Game implements InputProcessor {
         super.dispose();
         manager.dispose();
         spriteBatch.dispose();
+
     }
 
 
